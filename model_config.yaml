@@ -1,0 +1,5 @@
+nlayers: 20  # Similar to AlphaZero's residual blocks
+embed_dim: 128  # Embedding dimension for pieces
+inner_dim: 256  # Inner dimension of residual blocks
+use_1x1conv: true  # Use 1x1 convolutions in residual blocks
+dropout: 0.1  # Dropout rate

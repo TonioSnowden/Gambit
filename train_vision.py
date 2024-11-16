@@ -24,7 +24,7 @@ from cycling_utils import (
 
 from utils.optimizers import Lamb
 from utils.datasets import EVAL_HDF_Dataset
-from model import ChessModel
+from model import Model
 
 timer.report("Completed imports")
 
@@ -33,7 +33,7 @@ def get_args_parser():
     parser.add_argument("--model-config", help="model config path", type=Path, default="/root/Gambit/model_config.yaml")
     parser.add_argument("--save-dir", help="save checkpoint path", type=Path, default=os.environ["OUTPUT_PATH"])
     parser.add_argument("--load-path", help="path to checkpoint.pt file to resume from", type=Path, default="/root/Gambit/recover/checkpoint.pt")
-    parser.add_argument("--bs", help="batch size", type=int, default=4)
+    parser.add_argument("--bs", help="batch size", type=int, default=32)
     parser.add_argument("--lr", help="learning rate", type=float, default=0.001)
     parser.add_argument("--wd", help="weight decay", type=float, default=0.01)
     parser.add_argument("--ws", help="learning rate warm up steps", type=int, default=1000)
@@ -88,7 +88,8 @@ def main(args, timer):
     model_config = yaml.safe_load(open(args.model_config))
     if args.device_id == 0:
         print(f"ModelConfig: {model_config}")
-    model = ChessModel(**model_config)
+    model_config["device"] = 'cuda'
+    model = Model(**model_config)
     model = model.to(args.device_id)
 
     model_parameters = filter(lambda p: p.requires_grad, model.parameters())

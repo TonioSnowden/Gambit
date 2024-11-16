@@ -12,7 +12,7 @@ from model import ChessModel, encode_board
 
 def get_args_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model-config", type=Path, default="/root/chess-hackathon-4/model_config.yaml")
+    parser.add_argument("--model-config", type=Path, default="/root/Gambit/model_config.yaml")
     parser.add_argument("--save-dir", type=Path, default=os.environ["OUTPUT_PATH"])
     parser.add_argument("--load-path", type=Path, required=True)
     parser.add_argument("--lr", type=float, default=0.0001)
