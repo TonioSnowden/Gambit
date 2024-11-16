@@ -24,7 +24,7 @@ from cycling_utils import (
 
 from utils.optimizers import Lamb
 from utils.datasets import EVAL_HDF_Dataset
-from model import Model
+from model import ChessModel
 
 timer.report("Completed imports")
 
@@ -89,8 +89,8 @@ def main(args, timer):
     if args.device_id == 0:
         print(f"ModelConfig: {model_config}")
     model_config["device"] = 'cuda'
-    model = Model(**model_config)
-    model = model.to(args.device_id)
+model = ChessModel(**model_config)  # Changed from Model
+model = model.to(args.device_id)
 
     model_parameters = filter(lambda p: p.requires_grad, model.parameters())
     params = sum([torch.prod(torch.tensor(p.size())) for p in model_parameters])
